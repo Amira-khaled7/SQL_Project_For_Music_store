@@ -1,0 +1,48 @@
+/*BEST ARTIST*/
+SELECT Ar.Name,SUM(T.UnitPrice) Sales
+FROM Artist Ar
+Join Album Al
+ON Ar.ArtistId = Al.ArtistId
+Join Track T
+ON Al.AlbumId=T.AlbumId
+GROUP BY Ar.Name
+ORDER BY Sales DESC
+LIMIT 10;
+
+/*BEST GENER*/
+SELECT G.Name,SUM(T.UnitPrice) High_revenue_For_gener
+From Genre G
+JOIN Track T
+ON G.GenreId=T.GenreId
+GROUP BY G.Name
+ORDER By High_revenue_For_gener DESC
+LIMIT 10;
+
+/*BEST CUSTOMer*/
+SELECT C.FirstName || " " || C.LastName Name, SUM (I.total) Total_spent
+FROM Customer C
+JOIN Invoice  I
+ON C.CustomerId = I.CustomerId
+GROUP BY FirstName 
+ORDER BY Total_spent DESC 
+LIMIT 15;
+
+/*BEST EMPLOYEE*/
+SELECT C.SupportRepId,E.FirstName || " " || E.LastName Name,COUNT(*) num_of_sales,SUM(I.Total) Total_sales
+FROM Invoice I
+JOIN Customer C
+ON C.CustomerId = I.CustomerId
+JOIN Employee E 
+ON C.SupportRepId=E.EmployeeId
+Group BY Name 
+ORDER BY Total_sales DESC
+
+/* Top 5 country spend on music */
+SELECT C.COUNTRY,
+  	C.FIRSTNAME || ' ' || C.LASTNAME AS Customer_name,
+  	SUM(I.Total) Purchases
+  FROM INVOICE I
+  JOIN CUSTOMER C ON C.CUSTOMERID = I.CUSTOMERID
+  GROUP BY Country
+  ORDER BY Purchases DESC
+  LIMIT 5 
